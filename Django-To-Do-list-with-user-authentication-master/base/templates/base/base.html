@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Hello</title>
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+        <style>
+
+            .gray-bg {
+                background-image: url("/static/lmglogo.png"); /* fallback */
+                background-image: linear-gradient(rgba(156, 184, 250, 0.5), rgba(3, 32, 150, 0.7)),url(/static/landmark.png);
+                
+                background-image: url("/static/lmglogo.png"); /* fallback */
+                background-image: url("/static/lmglogo.png"), linear-gradient(rgba(156, 184, 250, 0.5), rgba(3, 32, 150, 0.7)); /* W3C */ 
+
+                letter-spacing: 1.5px; 
+                font-family: 'Poppins', sans-serif; 
+                background-position: center; 
+                background-size: cover; 
+                background-repeat: no-repeat;
+                height: 100%;
+
+                
+              }
+
+              body{
+                text-align: center;     
+              }
+        </style>
+    </head>
+    <body class="gray-bg">
+        <div class="gray-bg">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,139 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Login</title>
+  <link rel="shortcut icon" href="C:/Users/ridha.p/Documents/todo/test1/templates/staticlmglogo.png" type="image/x-icon">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- style for download -->
+  <style>
+    #id_username{
+      border-radius: 5px;
+      position: absolute;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      width: 250px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+     .id_password{
+      border-radius: 5px;
+      position: absolute;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      width: 250px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    label{
+      margin-left: 50px;
+      font-size: 15px;
+    }
+    .row {
+      padding-left: 10px;
+      margin-top: 1px;
+      position: relative;
+      background:white;
+      border-radius: 5px;
+    }
+    .topright {
+      position: absolute;
+      top: 10px;
+      right: 16px;
+      margin-right: 12px;
+    } 
+    p{
+      font-size: 11.5px;
+    }
+    .gray-bg {
+      background-image: url("/static/landmark.png"); /* fallback */
+      background-image: linear-gradient(rgba(156, 184, 250, 0.5), rgba(3, 32, 150, 0.7)),url(/static/landmark.png);
+      
+      background-image: url("/static/landmark.png"); /* fallback */
+      background-image: url("/static/landmark.png"), linear-gradient(rgba(156, 184, 250, 0.5), rgba(3, 32, 150, 0.7)); /* W3C */ 
+      
+      letter-spacing: 1.5px; 
+      font-family: 'Poppins', sans-serif; 
+      background-position: center; 
+      background-size: cover; 
+      background-repeat: no-repeat;
+      height: 100%;
+    }
+  </style>
+  {% block styling %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+  <script src="{% static 'js/plugins/chartJs/Chart.min.js' %}"></script>
+  {% endblock styling %}
+</head>
+<body >
+  <div class="gray-bg">
+  <!-- for downloading data -->
+  <div class="row" style="margin-left: 0; margin-right: 0;">
+  <div class="col-sm-12">
+    <div style="margin-top: 5px; font-family: 'Poppins', sans-serif; font-size: 25px; color: #0983b7;">
+      <img style="padding-bottom: 6px; margin-left:-15px;" src="/static/lmglogo.png" width="50px" height="50px"/><b>&nbsp;LANDMARK GROUP</b>
+    </div>
+    <div class="topright">
+    </div>
+  </div> 
+  </div>
+    <!-- background-color:#f3f3f4;padding -->
+    <div class="middle-box text-center loginscreen animated fadeInDown"
+      style="background:white; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); padding: 25px;border-radius: 5px;margin-top:28px; width: 800px;">
+      <div style="margin-top: -10px;">
+        <img class="logo-name" alt="image" src="/static/dlllogo.jpg" width="150px" height="150px" />
+      </div>
+      <br>
+      <h3><span style="color:#0983b7; font-size: larger; font-weight: bolder;margin-bottom: 5%;">
+          Sign Up</span></h3><br>
+      <!-- <p>Login in to see it in action.</p> -->
+      {% block content %}
+      <form  id="f1"  method="post">
+        {% csrf_token %}
+        <label for="">Name   :</label>
+        <input type="text" name="name" id="id_username"><br>
+        <label for="">Last Name   :</label>
+        <input type="text" name="lname" id="id_username"><br>
+        <label for="">Email   :</label>
+        <input type="email" name="email" class="id_password"><br>
+        <label for="">Password:</label>
+        <input type="password" name="pwd" class="id_password" id="pwd"><br>
+        <label for="">Confirm :</label>
+        <input type="password" name="cpwd" class="id_password" id="cpwd"><br>
+        <div id="error"> </div>
+        <span style="display:block; height: 5px;"></span>
+        <input style="letter-spacing:1.5px; padding-left: 40px; padding-right: 40px;" type="submit" class="btn btn-success">
+      </form>
+      {% endblock content %}
+      <p class="m-t"> <small>LMG, Data Labs</small> </p>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#cpwd').keyup(function(){
+                var pwd= $('#pwd').val();
+                var cpwd= $('#cpwd').val();
+                if(cpwd!=pwd){
+                    $('#error').html('Password not matching');
+                    $('#error').css('color','red');
+                }
+                else{
+                    $('#error').html('');
+                    $('#f1').attr("action","next");
+                }
+            });
+        });
+    
+    </script>
+    
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>

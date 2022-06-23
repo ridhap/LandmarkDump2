@@ -1,0 +1,158 @@
+{% extends "bases.html" %}
+
+{% block stylesheets %}
+{{ block.super }}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<style>
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #0aa7a7;
+}
+.container-fluid > .wrapper{
+    width: 50%;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: #ffffff;
+}
+
+.title-container{
+    background-color: rgb(226, 239, 250);
+    padding: 10px 0;
+}
+
+.title-container h1{
+    margin: 0;
+    text-align: center;
+}
+
+.create-task-container, .list-task-container{
+    padding: 15px 25px 15px 25px;
+}
+
+.message-container{
+    margin-top: 25px;
+}
+
+.required{
+    color: red;
+}
+</style>
+
+{% endblock  %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="wrapper">
+
+        <div class="title-container">
+            <h1>Django Todo Application</h1>
+        </div>
+
+        {% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    <div class="alert border-0 alert-success mar-bot-10-imp alert-dismissible fade show border-radius-none" role="alert">
+                        <div id="success-notification-div">
+                            {{ message }}
+                        </div>
+
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="ti ti-close"></i>
+                        </button>
+                    </div>
+                {% endif %}
+
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="alert border-0 alert-danger mar-bot-10-imp alert-dismissible fade show border-radius-none" role="alert">
+                        <div id="danger-notification-div">
+                            {{ message }}
+                        </div>
+                                        
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="ti ti-close"></i>
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="create-task-container">
+            <h2 class="">Create Task</h2>
+            <form action="{% url 'todo_maker:save-todo' %}" method="post">
+                {% csrf_token %}
+                {{ form.id.as_hidden }}
+                <div class="form-group">
+                    {{form.title.label}}
+                    <br>
+                    {{form.title}}
+                </div>
+                
+                <div class="form-group">
+                    {{form.description.label}}
+                    <br>
+                    {{form.description}}
+                </div>
+                
+                <div class="form-group">
+                    {{form.task_accomplished.label}}
+                    <br>
+                    {{form.task_accomplished}}
+                    <br>
+                   
+
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </div>
+            </form>
+        </div>
+    
+        <div class="list-task-container">
+            <h2 class="">List Tasks</h2>
+            <table border="1" class="task-table table table-bordered"  >
+                <thead>
+                    <tr>
+                        <td><p style="color:#9b0101; background-color: rgb(247, 224, 247);  font-size: larger; font-family: cursive;">Title</p></td>
+                        <td><p style="color:#9b0101;  background-color: rgb(247, 224, 247);  font-size: larger;font-family: cursive;">Description</p></td>
+                        <td><p style="color:#9b0101; background-color: rgb(247, 224, 247);  font-size: larger;font-family: cursive;">Action</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if tasks %}
+                        {% for task in tasks %}
+                        <tr>
+                            <td>
+                                {{ task.title }} 
+                                {% if task.task_accomplished == 1 %}
+                                    <br>
+                                    <span class="badge badge-success" >Task Completed</span>
+                               {% endif %}
+                            </td>
+                            
+                            <td>{{ task.description }}</td>
+                            <td>
+                                <a href="{% url 'todo_maker:edit-todo' task.id %}" class="btn btn-info btn-sm">Edit</a>
+                                <br>
+                                <br>
+                                <a href="{% url 'todo_maker:remove-todo' task.id %}" class="btn btn-danger btn-sm">Remove</a>
+                            </td>
+                        </tr>
+                        {% endfor %}     
+                    {% else %}
+                    <tr>
+                        <td colspan="3">No task available</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock  %}

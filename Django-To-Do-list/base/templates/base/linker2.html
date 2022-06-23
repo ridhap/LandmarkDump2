@@ -1,0 +1,23 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <h1>Login</h1>
+</div>
+
+{% include 'base/flash_messages.html' %}
+
+<div class="card-body">
+    <form method="POST">
+        {% csrf_token %}
+        
+        <p style="font-size: larger;"><a href="{% url 'register' %}">Try to Register </a></p>
+    </form>
+    <p>Please try Loging in Again! <a href="{% url 'login' %}">Login</a></p>
+</div>
+
+
+
+
+
+{% endblock content %}
